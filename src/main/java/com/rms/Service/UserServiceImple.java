@@ -87,8 +87,13 @@ public class UserServiceImple implements UserService {
 
 	@Override
 	public List<UserDTO> SearchUser(String query) {
-		// TODO Auto-generated method stub
-		return null;
+		logger.info("Search User with query: {}", query);
+		List<User> users = userRepository.SearchUser(query);
+				if (users.isEmpty()) {
+		            throw new ResourceNotFoundException("No users found in with query: " + query);
+		        }
+				//.orElseThrow(() -> new ResourceNotFoundException("User is not exists with given id :"  + id));
+		return users.stream().map(UserMapper::toDTO).collect(Collectors.toList());
 	}
 
 	

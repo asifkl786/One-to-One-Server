@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rms.DTO.UserDTO;
@@ -73,5 +74,14 @@ public class UserController {
 		userService.deleteUser(id);
 		return new ResponseEntity<>("User Delete Successfully",HttpStatus.OK);
 	}
+	
+	// Build Search User REST API
+	@GetMapping("/search")
+	private ResponseEntity<List<UserDTO>> SearchUser(@RequestParam("query") String query){
+		logger.info("Received request to Search User with ID: {}", query);
+	List<UserDTO> user = userService.SearchUser(query);
+		return new ResponseEntity<>(user,HttpStatus.OK);
+	}
+	
 
 }
