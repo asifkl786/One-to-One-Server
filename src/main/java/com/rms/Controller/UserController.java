@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.rms.DTO.ProfileDTO;
 import com.rms.DTO.UserDTO;
 import com.rms.Service.UserService;
 
@@ -38,8 +39,9 @@ public class UserController {
 	// Build Create User REST API
 	@PostMapping("/create")
 	private ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO){
-		logger.info("Receaived request to create User: {}", userDTO);
+		 logger.info("Received request to create User: {}", userDTO.getName());
 	     UserDTO savedUser = userService.createUser(userDTO);
+	     logger.info("{} User Successfully Created",savedUser.getName());
 		return new ResponseEntity<>(savedUser,HttpStatus.CREATED);
 	}
 	
@@ -48,6 +50,7 @@ public class UserController {
 	private ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
 		logger.info("Received request to fetch User With ID: {}", id);
 		UserDTO user = userService.getUserById(id);
+		logger.info("{} User Successfully Found",user.getName());
 		return new ResponseEntity<>(user,HttpStatus.OK);
 	}
 	
@@ -56,6 +59,7 @@ public class UserController {
 	private ResponseEntity<List<UserDTO>> getAllUser(){
 		logger.info("Received request to fetch All User");
 		List<UserDTO> users = userService.getAllUser();
+		logger.info("{} Users Successfully Found",users.size());
 		return new ResponseEntity<>(users,HttpStatus.OK);
 	}
 	
@@ -63,7 +67,8 @@ public class UserController {
 	@PutMapping("/{id}")
 	private ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO){
 		logger.info("Received request to update User with ID: {}", id);
-	UserDTO updatedUser = userService.updateUser(id, userDTO);
+	    UserDTO updatedUser = userService.updateUser(id, userDTO);
+	    logger.info("{} User Update Successfully ",userDTO.getName());
 		return new ResponseEntity<>(updatedUser,HttpStatus.OK);
 	}
 	
@@ -79,9 +84,17 @@ public class UserController {
 	@GetMapping("/search")
 	private ResponseEntity<List<UserDTO>> SearchUser(@RequestParam("query") String query){
 		logger.info("Received request to Search User with ID: {}", query);
-	List<UserDTO> user = userService.SearchUser(query);
+	    List<UserDTO> user = userService.SearchUser(query);
+	    logger.info("{} User Successfully Found",query);
 		return new ResponseEntity<>(user,HttpStatus.OK);
 	}
 	
-
+	// Build Search Profile REST API
+	@GetMapping("/searchProfile")
+	private ResponseEntity<List<ProfileDTO>> searchUserByProfile(@RequestParam("query") String query){
+		logger.info("Received request to Search User with ID: {}", query);
+		List<ProfileDTO> userProfile = userService.searchUserById(query);
+		return new ResponseEntity<>(userProfile,HttpStatus.OK);
+	}
+	
 }

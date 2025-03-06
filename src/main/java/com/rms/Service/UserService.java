@@ -2,6 +2,7 @@ package com.rms.Service;
 
 import java.util.List;
 
+import com.rms.DTO.ProfileDTO;
 import com.rms.DTO.UserDTO;
 
 public interface UserService {
@@ -11,5 +12,9 @@ public interface UserService {
 	 UserDTO updateUser(Long id , UserDTO userDTO);
 	 void deleteUser(Long id);
 	 List<UserDTO> SearchUser(String query);
+	 
+	 
+	 /* This Section Represent to Profile*/
+	 List<ProfileDTO> searchUserById(String query);
 
 }

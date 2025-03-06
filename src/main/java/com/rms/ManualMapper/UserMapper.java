@@ -14,6 +14,7 @@ public class UserMapper {
 		user.setName(userDTO.getName());
 		user.setEmail(userDTO.getEmail());
 		
+		
 		// Convert ProfileDTO to Profile entity
 		if(userDTO.getProfile() != null) {
 			Profile profile = new Profile();
